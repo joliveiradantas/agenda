@@ -1,5 +1,6 @@
 <template>
   <header class="bg_header">
+    <img src="@/assets/images/illustrations/ic-logo.svg" class="ic_logo">
   </header>
 </template>
 
@@ -17,6 +18,13 @@
     margin: 0 0 12*$x;
     padding: 2*$x;
     width: 180*$x;
+  }
+
+  .ic_logo {
+    width: 18.5*$x;
+    height: 4*$x;
+    margin: 0 28.5*$x 0 0 ;
+    object-fit: contain;
   }
 
 </style>
