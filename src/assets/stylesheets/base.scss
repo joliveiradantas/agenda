@@ -1,0 +1,16 @@
+@import 'assets/stylesheets/_variables.scss';
+
+@mixin reset-box {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.app-html,
+.app-body {
+  @include reset-box;
+}
+
+.app-html {
+  font-size: $font-default;
+}
