@@ -14,3 +14,9 @@
 .app-html {
   font-size: $font-default;
 }
+
+.app {
+  * {
+    @include reset-box;
+  }
+}

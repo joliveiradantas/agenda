@@ -4,6 +4,8 @@
     ref="main"
     class="app"
   >
+    <navigation-header />
+
     <main>      
       <router-view ref="view" />     
     </main>
@@ -11,9 +13,14 @@
 </template>
 
 <script>
-export default {
-  name: 'app',
-}
+  import NavigationHeader from './components/Navigation/Header.vue';
+
+  export default {
+    name: 'app',
+    components: {
+      NavigationHeader
+    }
+  }
 </script>
 
 <style lang="scss">
