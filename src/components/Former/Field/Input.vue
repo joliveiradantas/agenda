@@ -44,7 +44,6 @@
 
     background-color: $pale-lilac;
     border-radius: 0.5*$x;
-    font-size: 2*$x;
     height: 4*$x;
     margin: 0;
     padding: 0.875*$x $x 0.75*$x;
