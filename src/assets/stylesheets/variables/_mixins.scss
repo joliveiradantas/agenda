@@ -9,3 +9,12 @@
   outline: none;
   resize: none;
 }
+
+@mixin button-reset {
+  @include field-reset;
+
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  min-width: 0px;
+}

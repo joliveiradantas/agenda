@@ -3,16 +3,25 @@
     <img src="@/assets/images/illustrations/ic-book.svg" class="ic_book">
 
     <p>{{ messageBookEmpty }}</p>
+
+    <former-button icon="plus" :label="buttonLabel">      
+    </former-button>
       
   </section>
 </template>
 
 <script>
+  import FormerButton from '@/components/Former/Button.vue';
+
   export default {
     name: 'HomeIndex',
+    components: {
+      FormerButton,
+    },
     data() {
       return {
-        messageBookEmpty: 'Nenhum contato foi criado ainda.'
+        messageBookEmpty: 'Nenhum contato foi criado ainda.',
+        buttonLabel: 'Criar contato',
       }
     },
   }
