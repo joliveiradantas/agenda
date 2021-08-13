@@ -16,6 +16,8 @@
 }
 
 .app {
+  @include default-font;
+  
   * {
     @include reset-box;
   }

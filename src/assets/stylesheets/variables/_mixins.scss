@@ -1,0 +1,11 @@
+@mixin field-reset {
+  @include default-font;
+
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  resize: none;
+  min-width: 0px;
+}
