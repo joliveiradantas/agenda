@@ -9,6 +9,11 @@
     <main>      
       <router-view ref="view" />     
     </main>
+
+    <portal-target
+      name="popups"
+      slim
+    />
   </div>
 </template>
 
