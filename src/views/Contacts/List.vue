@@ -5,23 +5,25 @@
       <li>E-mail</li>
       <li>Telefone</li>
     </ul>
-    <ol class="contacts-list body" 
-        v-for="contact in contacts"
-        :key="contact.id"
-    >
-      <li class="contacts-list-column contact">
-        <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
-        {{ contact.name }}
-      </li>
-      <li class="contacts-list-column email">
-        {{ contact.email }}
-      </li>
-      <li class="contacts-list-column phone">
-        {{ contact.phone }}
-      </li>
-      <li class="contacts-list-column icons">
-        <img src="@/assets/images/ic-edit.svg" class="ic_edit">
-        <img src="@/assets/images/ic-delete.svg" class="ic_delete">
+    <ol>
+      <li class="contacts-list body" 
+           v-for="contact in contacts"
+           :key="contact.id"
+      >
+        <span class="contacts-list-column contact">
+          <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
+          {{ contact.name }}
+        </span>
+        <span class="contacts-list-column email">
+          {{ contact.email }}
+        </span>
+        <span class="contacts-list-column phone">
+          {{ contact.phone }}
+        </span>
+        <span class="contacts-list-column icons">
+          <img src="@/assets/images/ic-edit.svg" class="ic_edit">
+          <img src="@/assets/images/ic-delete.svg" class="ic_delete">
+        </span>
       </li>
     </ol>
   </div>
