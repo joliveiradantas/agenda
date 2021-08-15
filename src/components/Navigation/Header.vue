@@ -24,7 +24,6 @@
     display: flex;
 
     height: 8*$x;
-    margin: 0 0 12*$x;
     padding: 2*$x;
     width: 180*$x;
   }

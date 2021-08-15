@@ -37,6 +37,6 @@
   }
 
   .ic_book {
-    margin: 0 0 3*$x ;
+    margin: 12*$x 0 3*$x ;
   }
 </style>
