@@ -1,6 +1,6 @@
 <template>
-  <span is="button" ref="button" class="former-button">    
-    <img :src="iconPath">
+  <span is="button" ref="button" :class="classes">    
+    <img v-if="icon" :src="iconPath" class="icon">
     <span>
       {{ label }}
     </span>   
@@ -19,11 +19,35 @@
       label: {
         type: String,
         default: '',        
-      }
+      },
+      creationButton: {
+        type: Boolean,
+        default: false,
+      },
+      higher: {
+        type: Boolean,
+        default: false,
+      },
+      wider: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
+      classes() {
+        const classes = ['former-button'];
+
+        if(this.creationButton) {
+          classes.push('creation-button');
+        }
+        if(this.higher) {
+          classes.push('higher');
+        }
+
+        return classes;
+      },
       iconPath() {
-        if (this.icon === 'plus') {
+        if(this.icon === 'plus') {
           return require('@/assets/images/ic-plus.svg');
         }
       }
@@ -48,13 +72,24 @@
     flex-direction: row;
     font-size: 14px;
     font-weight: 500;
-    height: 5*$x;
-    justify-content: space-between;
-    margin: 3*$x 5.875*$x 0;
-    padding: 1.5*$x 2.75*$x 1.5*$x 2*$x;
+    justify-content: flex-start;
     user-select: none;
-    width: 18*$x;
-    
+  }
+
+  .creation-button {
     @include former-button($light-yellowish-green, $red);
+
+    height: 4*$x;
+    padding: $x 2.75*$x $x 2*$x;
+    width: 18*$x;
+
+    &.higher {
+      height: 5*$x;
+      padding: 1.5*$x 2.75*$x 1.5*$x 2*$x;
+    }
+  }
+
+  .icon {
+    margin-right: $x;
   }
 </style>

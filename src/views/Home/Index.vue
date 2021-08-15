@@ -2,11 +2,15 @@
   <section class="home-index-content">
     <img src="@/assets/images/illustrations/ic-book.svg" class="ic_book">
 
-    <p>{{ messageBookEmpty }}</p>
+    <p class="message">{{ messageBookEmpty }}</p>
 
-    <former-button icon="plus" :label="buttonLabel">      
+    <former-button 
+      icon="plus" 
+      :label="buttonLabel"
+      :creationButton="creationButton"
+      :higher="true"
+    >      
     </former-button>
-      
   </section>
 </template>
 
@@ -22,6 +26,9 @@
       return {
         messageBookEmpty: 'Nenhum contato foi criado ainda.',
         buttonLabel: 'Criar contato',
+        modalTitleContactCreation: 'Criar novo contato',
+        creationButton: true,
+        higher: true,
       }
     },
   }
@@ -37,6 +44,11 @@
   }
 
   .ic_book {
-    margin: 12*$x 0 3*$x ;
+    margin-top: 12*$x;  
+    margin-bottom: 3*$x;
+  }
+
+  .message {
+    margin-bottom: 3*$x;
   }
 </style>
