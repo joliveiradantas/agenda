@@ -1,5 +1,10 @@
 <template>
-  <span is="button" ref="button" :class="classes">    
+  <span 
+    is="button" 
+    ref="button" 
+    :class="classes"
+    @click="click"
+  >    
     <img v-if="icon" :src="iconPath" class="icon">
     <span>
       {{ label }}
@@ -20,9 +25,9 @@
         type: String,
         default: '',        
       },
-      creationButton: {
-        type: Boolean,
-        default: false,
+      buttonType: {
+        type: String,
+        default: '',
       },
       higher: {
         type: Boolean,
@@ -37,11 +42,17 @@
       classes() {
         const classes = ['former-button'];
 
-        if(this.creationButton) {
+        if(this.buttonType === 'creationButton') {
           classes.push('creation-button');
         }
         if(this.higher) {
           classes.push('higher');
+        }
+        if(this.buttonType === 'defaultButton') {
+          classes.push('default-button');          
+        }
+        if(this.wider) {
+          classes.push('wider');
         }
 
         return classes;
@@ -51,6 +62,12 @@
           return require('@/assets/images/ic-plus.svg');
         }
       }
+    },
+
+    methods: {
+      click() {
+        this.$emit('click');
+      },
     },
   };
 </script>
@@ -86,6 +103,18 @@
     &.higher {
       height: 5*$x;
       padding: 1.5*$x 2.75*$x 1.5*$x 2*$x;
+    }
+  }
+
+  .default-button {
+    @include former-button($red, $white-two);
+
+    height: 4*$x;
+    padding: $x 2*$x $x 2*$x;
+    width: 9*$x;
+
+    &.wider {
+      width: 10*$x;
     }
   }
 

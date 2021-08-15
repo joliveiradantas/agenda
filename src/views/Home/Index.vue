@@ -7,31 +7,50 @@
     <former-button 
       icon="plus" 
       :label="buttonLabel"
-      :creationButton="creationButton"
+      :buttonType="buttonType"
       :higher="true"
+      @click="toggleModal"
     >      
     </former-button>
+
+    <popup-modal 
+      v-if="showModal"
+      :title="modalTitleContactCreation"
+      buttonType="defaultButton"
+      buttonLabel="Salvar"
+    >
+    </popup-modal>
   </section>
 </template>
 
 <script>
   import FormerButton from '@/components/Former/Button.vue';
 
+  import PopupModal from '@/components/Modal/Modal.vue';  
+
   export default {
     name: 'HomeIndex',
     components: {
       FormerButton,
+      PopupModal,
     },
     data() {
       return {
         messageBookEmpty: 'Nenhum contato foi criado ainda.',
         buttonLabel: 'Criar contato',
         modalTitleContactCreation: 'Criar novo contato',
-        creationButton: true,
+        buttonType: 'creationButton',
         higher: true,
+        showModal: false,
       }
     },
-  }
+
+    methods: {
+      toggleModal() {
+        this.showModal = !this.showModal;      
+      },
+    },
+  }  
 </script>
 
 <style lang="scss" scoped>
