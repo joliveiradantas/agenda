@@ -5,16 +5,19 @@
       <li>E-mail</li>
       <li>Telefone</li>
     </ul>
-    <ol class="contacts-list body">
+    <ol class="contacts-list body" 
+        v-for="contact in contacts"
+        :key="contact.id"
+    >
       <li class="contacts-list-column contact">
-        <a class="contacts-list-letter oval">A</a>
-        Alana
+        <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
+        {{ contact.name }}
       </li>
       <li class="contacts-list-column email">
-        alana@mail.com
+        {{ contact.email }}
       </li>
       <li class="contacts-list-column phone">
-        (11) 98432-9263
+        {{ contact.phone }}
       </li>
       <li class="contacts-list-column icons">
         <img src="@/assets/images/ic-edit.svg" class="ic_edit">
@@ -25,8 +28,74 @@
 </template>
 
 <script>
+  import { contactsData } from '@/shared/data';
+
   export default {
     name: 'ContactsList',
+    data() {
+      return {
+        contacts: [],
+      }
+    },
+
+    created () {
+      this.loadContacts();     
+    },
+
+    mounted () {
+      this.formerOvalColor();
+    },
+
+    methods: {
+      loadContacts() {
+        this.contacts = contactsData;        
+      },      
+      firstLetter(name) {
+        return name.charAt(0);
+      },
+      classes(color) {
+        const classes = ['contacts-list-letter', 'oval'];
+
+        classes.push(color);
+        return classes;
+      },
+      formerOvalColor() {
+        this.contacts = this.contacts.map(c => {
+          const letter = (this.firstLetter(c.name)).toLowerCase();
+
+           switch (letter) {
+            case 'a':
+              c.color = 'orange';
+              break;
+            case 'b':
+              c.color = 'green';
+              break;
+            case 'c':
+              c.color = 'blue';
+              break;
+            case 'd':
+              c.color = 'orange-light';
+              break;
+            case 'e':
+              c.color = 'purple';
+              break;
+            case 'f':
+              c.color = 'pink';
+              break;
+            case 'g':
+              c.color = 'green-light';
+              break;
+            case 'h':
+              c.color = 'red-light';
+              break            
+            default:
+              c.color = 'orange';
+           }
+          
+          return c;
+        })
+      }
+    },
   }
 </script>
 
@@ -68,6 +137,7 @@
   .body {
     align-items: center;
     border-top: none;
+    cursor: pointer;
     display: flex;
     font-size: 1.75*$x;
     padding: $x 2*$x $x $x;
@@ -83,13 +153,37 @@
     text-align: center;
   }
 
-  .oval {    
-    background-color: #fa8d68;
+  .oval {
     border-radius: 1.5*$x; 
     height: 24px;
     margin: 0 16px 0 0;
     padding: 3px 5px 2px 6px;
     width: 24px;
+
+    &.orange {
+      background-color: $orange;
+    }
+    &.green {
+      background-color: $green;
+    }
+    &.blue {
+      background-color: $sky-blue;
+    }
+    &.orange-light {
+      background-color: $orange-light;
+    }
+    &.purple {
+      background-color: $purple;
+    }
+    &.pink {
+      background-color: $pink;
+    }
+    &.green-light {
+      background-color: $green-light;
+    }
+    &.red-light {
+      background-color: $red-light;
+    }
   }
 
   .email {
@@ -102,9 +196,5 @@
 
   .icons {
     padding-left: 290.75px;
-  }
-
-  .ic_edit {
-    /* margin-right: 24px; */
   }
 </style>
