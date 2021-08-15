@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 import HomeIndex from '@/views/Home/Index.vue'
 
+import ContactsList from '@/views/Contacts/List.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -10,6 +12,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeIndex
+  },
+  {
+    path: '/contatos',
+    name: 'contacts-list',
+    component: ContactsList,
   }
 ]
 
