@@ -29,7 +29,7 @@
   @import 'assets/stylesheets/base.scss';
 
   .app {
-    background-color: $white;
+    background-color: $white-light;
     margin: 0 auto;
     width: 180*$x;
     height: 128*$x;

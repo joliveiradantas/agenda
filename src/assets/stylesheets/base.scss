@@ -21,4 +21,8 @@
   * {
     @include reset-box;
   }
+
+  ul, ol {
+    @include list-reset;
+  }
 }
