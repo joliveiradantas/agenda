@@ -2,7 +2,7 @@
   <header class="bg_header">
     <img src="@/assets/images/illustrations/ic-logo.svg" class="ic_logo">
 
-    <search-bar />
+    <search-bar @input="input" />
   </header>
 </template>
 
@@ -13,7 +13,13 @@
     name: 'NavigationHeader',
     components: {
       SearchBar
-    }  
+    },
+
+    methods: {
+      input(value) {
+        this.$emit('input', value);
+      }
+    },
   }
 </script>
 
@@ -34,5 +40,4 @@
     object-fit: contain;
     width: 18.5*$x;
   }
-
 </style>

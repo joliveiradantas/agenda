@@ -1,5 +1,7 @@
 <template>
   <div>
+    <navigation-header @input="searchContact"/>
+
     <ul class="contacts-list header">
       <li>Contatos</li>
       <li>E-mail</li>
@@ -31,12 +33,17 @@
 
 <script>
   import { contactsData } from '@/shared/data';
+  import NavigationHeader from '@/components/Navigation/Header.vue';
 
   export default {
     name: 'ContactsList',
+    components: {
+      NavigationHeader,
+    },
     data() {
       return {
         contacts: [],
+        searchingTimeout: null,
       }
     },
 
@@ -96,8 +103,19 @@
           
           return c;
         })
-      }
-    },
+      },
+      searchContact(value) {
+        let timeout =  500;
+        clearTimeout(this.searchingTimeout);
+
+        this.searchingTimeout = setTimeout(this.filterContacts, timeout, value);
+      },
+      filterContacts(param) {        
+        this.contacts = param 
+                              ? [...this.contacts.filter(c => c.name.includes(param))]         
+                              : contactsData;
+      },
+    }
   }
 </script>
 

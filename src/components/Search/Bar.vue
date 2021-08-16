@@ -3,6 +3,8 @@
     <former-input
       ref="input"
       :field="field"
+      type='search'
+      @input="input"
     />
 
     <img src="@/assets/images/ic-search.svg" class="ic_search">
@@ -36,6 +38,12 @@
           id: this.id || 'input-search',
           placeholder: this.placeholder,
         };
+      },
+    },
+
+    methods: {
+      input(value) {
+        this.$emit('input', value);
       },
     },
   };
