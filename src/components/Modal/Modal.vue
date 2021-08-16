@@ -1,7 +1,7 @@
 <template>
   <portal to="popups">
     <div class="popup-modal">
-      <div class="popup-modal-content">
+      <div :class="modalContentClasses">
         <div class="popup-modal-header">
           {{ title }}         
         </div>
@@ -17,6 +17,7 @@
           </span>
           <former-button
             :buttonType="buttonType"
+            :wider="wider"
             :label="buttonLabel"
           >
           </former-button>  
@@ -50,10 +51,23 @@
       buttonLabel: {
         type: String,
         default: '',
+      },
+      wider: {
+        type: Boolean,
+        default: false,
       }
     },
 
     computed: {
+      modalContentClasses() {
+        const classes = ['popup-modal-content'];
+
+        if(this.exclusionModal) {
+          classes.push('exclusion');
+        }
+
+        return classes; 
+      },
       cancelationClasses() {
         const classes = ['cancel'];
 
@@ -95,6 +109,10 @@
     height: 42.75*$x;
     margin: 29.25*$x 65.25*$x 56*$x 60.75*$x;
     width: 54*$x;
+
+    &.exclusion {
+      height: 25.875*$x;
+    }
   }
 
   .popup-modal-header {

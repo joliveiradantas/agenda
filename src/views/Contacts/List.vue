@@ -26,8 +26,12 @@
           <span class="contacts-list-column icons">
             <img src="@/assets/images/ic-edit.svg" 
                  class="ic_edit"
-                 @click="toggleModal">
-            <img src="@/assets/images/ic-delete.svg" class="ic_delete">
+                 @click="toggleModal"
+            >
+            <img src="@/assets/images/ic-delete.svg" 
+                 class="ic_delete"
+                 @click="toggleDeleteModal"
+            >
           </span>
         </li>
       </transition-group>      
@@ -39,6 +43,13 @@
       @close="toggleModal"
     >
     </modal-contact>
+
+    <modal-delete-contact 
+      v-if="showDeleteModal"
+      title="Excluir contato"
+      @close="toggleDeleteModal"
+    >
+    </modal-delete-contact>
   </div>
 </template>
 
@@ -46,12 +57,14 @@
   import { contactsData } from '@/shared/data';
   import NavigationHeader from '@/components/Navigation/Header.vue';
   import ModalContact from '@/components/Modal/Contact/ModalContact.vue';
+  import ModalDeleteContact from '@/components/Modal/Contact/ModalDeleteContact.vue';  
 
   export default {
     name: 'ContactsList',
     components: {
       NavigationHeader,
       ModalContact,
+      ModalDeleteContact
     },
     data() {
       return {
@@ -59,6 +72,7 @@
         searchingTimeout: null,
         modalTitleContactEdition: 'Editar contato',
         showModal: false,
+        showDeleteModal: false,
       }
     },
 
@@ -133,6 +147,10 @@
       toggleModal() {
         this.showModal = !this.showModal;      
       },
+      toggleDeleteModal() {
+        this.showDeleteModal = !this.showDeleteModal;  
+
+      }
     }
   }
 </script>
