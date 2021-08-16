@@ -8,25 +8,27 @@
       <li>Telefone</li>
     </ul>
     <ol>
-      <li class="contacts-list body" 
-           v-for="contact in contacts"
-           :key="contact.id"
-      >
-        <span class="contacts-list-column contact">
-          <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
-          {{ contact.name }}
-        </span>
-        <span class="contacts-list-column email">
-          {{ contact.email }}
-        </span>
-        <span class="contacts-list-column phone">
-          {{ contact.phone }}
-        </span>
-        <span class="contacts-list-column icons">
-          <img src="@/assets/images/ic-edit.svg" class="ic_edit">
-          <img src="@/assets/images/ic-delete.svg" class="ic_delete">
-        </span>
-      </li>
+      <transition-group name="contacts-list">
+        <li class="contacts-list body" 
+            v-for="contact in contacts"
+            :key="contact.id"
+        >
+          <span class="contacts-list-column contact">
+            <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
+            {{ contact.name }}
+          </span>
+          <span class="contacts-list-column email">
+            {{ contact.email }}
+          </span>
+          <span class="contacts-list-column phone">
+            {{ contact.phone }}
+          </span>
+          <span class="contacts-list-column icons">
+            <img src="@/assets/images/ic-edit.svg" class="ic_edit">
+            <img src="@/assets/images/ic-delete.svg" class="ic_delete">
+          </span>
+        </li>
+      </transition-group>      
     </ol>
   </div>
 </template>
@@ -112,7 +114,7 @@
       },
       filterContacts(param) {        
         this.contacts = param 
-                              ? [...this.contacts.filter(c => c.name.includes(param))]         
+                              ? [...this.contacts.filter(c => c.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)]         
                               : contactsData;
       },
     }
@@ -216,5 +218,13 @@
 
   .icons {
     padding-left: 290.75px;
+  }
+
+  .contacts-list-enter-active, .contacts-list-leave-active {
+    transition: all 1s;
+  }
+  .contacts-list-enter, .contacts-list-leave-to {
+    opacity: 0;
+    transform: translateY(3.75*$x);
   }
 </style>
