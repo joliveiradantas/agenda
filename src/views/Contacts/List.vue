@@ -24,28 +24,41 @@
             {{ contact.phone }}
           </span>
           <span class="contacts-list-column icons">
-            <img src="@/assets/images/ic-edit.svg" class="ic_edit">
+            <img src="@/assets/images/ic-edit.svg" 
+                 class="ic_edit"
+                 @click="toggleModal">
             <img src="@/assets/images/ic-delete.svg" class="ic_delete">
           </span>
         </li>
       </transition-group>      
     </ol>
+
+    <popup-modal-contact 
+      v-if="showModal"
+      :title="modalTitleContactEdition"
+      @close="toggleModal"
+    >
+    </popup-modal-contact>
   </div>
 </template>
 
 <script>
   import { contactsData } from '@/shared/data';
   import NavigationHeader from '@/components/Navigation/Header.vue';
+  import PopupModalContact from '@/components/Modal/Contact/ModalContact.vue';
 
   export default {
     name: 'ContactsList',
     components: {
       NavigationHeader,
+      PopupModalContact,
     },
     data() {
       return {
         contacts: [],
         searchingTimeout: null,
+        modalTitleContactEdition: 'Editar contato',
+        showModal: false,
       }
     },
 
@@ -116,6 +129,9 @@
         this.contacts = param 
                               ? [...this.contacts.filter(c => c.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)]         
                               : contactsData;
+      },
+      toggleModal() {
+        this.showModal = !this.showModal;      
       },
     }
   }
