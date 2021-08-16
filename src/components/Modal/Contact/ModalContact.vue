@@ -33,7 +33,7 @@
   import FormerInput from '@/components/Former/Field/Input.vue';
 
   export default {
-    name: 'PopupModalContact',
+    name: 'ModalContact',
     components: {
       PopupModal,
       FormerInput

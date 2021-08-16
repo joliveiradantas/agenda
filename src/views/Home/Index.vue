@@ -15,12 +15,12 @@
       >      
       </former-button>
 
-      <popup-modal-contact 
+      <modal-contact 
         v-if="showModal"
         :title="modalTitleContactCreation"
         @close="toggleModal"
       >
-      </popup-modal-contact>
+      </modal-contact>
     </section>
   </div>
 </template>
@@ -28,14 +28,14 @@
 <script>
   import NavigationHeader from '@/components/Navigation/Header.vue';
   import FormerButton from '@/components/Former/Button.vue';
-  import PopupModalContact from '@/components/Modal/Contact/ModalContact.vue';
+  import ModalContact from '@/components/Modal/Contact/ModalContact.vue';
 
   export default {
     name: 'HomeIndex',
     components: {
       NavigationHeader,
       FormerButton,
-      PopupModalContact
+      ModalContact
     },
     data() {
       return {

@@ -33,25 +33,25 @@
       </transition-group>      
     </ol>
 
-    <popup-modal-contact 
+    <modal-contact 
       v-if="showModal"
       :title="modalTitleContactEdition"
       @close="toggleModal"
     >
-    </popup-modal-contact>
+    </modal-contact>
   </div>
 </template>
 
 <script>
   import { contactsData } from '@/shared/data';
   import NavigationHeader from '@/components/Navigation/Header.vue';
-  import PopupModalContact from '@/components/Modal/Contact/ModalContact.vue';
+  import ModalContact from '@/components/Modal/Contact/ModalContact.vue';
 
   export default {
     name: 'ContactsList',
     components: {
       NavigationHeader,
-      PopupModalContact,
+      ModalContact,
     },
     data() {
       return {
