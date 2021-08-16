@@ -9,7 +9,12 @@
         <slot name="content"/>
 
         <div class="popup-modal-footer">
-          <span :class="cancelationClasses">Cancelar</span>
+          <span 
+            :class="cancelationClasses"
+            @click="cancel"
+          >
+            Cancelar
+          </span>
           <former-button
             :buttonType="buttonType"
             :label="buttonLabel"
@@ -57,6 +62,12 @@
         }
 
         return classes; 
+      }
+    },
+
+    methods: {
+      cancel() {
+        this.$emit('close');
       }
     },
   };

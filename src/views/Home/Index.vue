@@ -1,38 +1,41 @@
 <template>
-  <section class="home-index-content">
-    <img src="@/assets/images/illustrations/ic-book.svg" class="ic_book">
+  <div>    
+    <navigation-header />
+    <section class="home-index-content">
+      <img src="@/assets/images/illustrations/ic-book.svg" class="ic_book">
 
-    <p class="message">{{ messageBookEmpty }}</p>
+      <p class="message">{{ messageBookEmpty }}</p>
 
-    <former-button 
-      icon="plus" 
-      :label="buttonLabel"
-      :buttonType="buttonType"
-      :higher="true"
-      @click="toggleModal"
-    >      
-    </former-button>
+      <former-button 
+        icon="plus" 
+        :label="buttonLabel"
+        :buttonType="buttonType"
+        :higher="true"
+        @click="toggleModal"
+      >      
+      </former-button>
 
-    <popup-modal 
-      v-if="showModal"
-      :title="modalTitleContactCreation"
-      buttonType="defaultButton"
-      buttonLabel="Salvar"
-    >
-    </popup-modal>
-  </section>
+      <popup-modal-contact 
+        v-if="showModal"
+        :title="modalTitleContactCreation"
+        @close="toggleModal"
+      >
+      </popup-modal-contact>
+    </section>
+  </div>
 </template>
 
 <script>
+  import NavigationHeader from '@/components/Navigation/Header.vue';
   import FormerButton from '@/components/Former/Button.vue';
-
-  import PopupModal from '@/components/Modal/Modal.vue';  
+  import PopupModalContact from '@/components/Modal/Contact/ModalContact.vue';
 
   export default {
     name: 'HomeIndex',
     components: {
+      NavigationHeader,
       FormerButton,
-      PopupModal,
+      PopupModalContact
     },
     data() {
       return {
@@ -40,7 +43,6 @@
         buttonLabel: 'Criar contato',
         modalTitleContactCreation: 'Criar novo contato',
         buttonType: 'creationButton',
-        higher: true,
         showModal: false,
       }
     },
