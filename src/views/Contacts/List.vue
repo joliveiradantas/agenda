@@ -103,40 +103,42 @@
         return classes;
       },
       formerOvalColor(contacts = this.contacts) {
-        this.clonedContacts = contacts.map(c => {
-          const letter = (this.firstLetter(c.name)).toLowerCase();
+        this.clonedContacts = contacts
+          .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))
+          .map(c => {
+            const letter = (this.firstLetter(c.name)).toLowerCase();
 
-           switch (letter) {
-            case 'a':
-              c.color = 'orange';
-              break;
-            case 'b':
-              c.color = 'green';
-              break;
-            case 'c':
-              c.color = 'blue';
-              break;
-            case 'd':
-              c.color = 'orange-light';
-              break;
-            case 'e':
-              c.color = 'purple';
-              break;
-            case 'f':
-              c.color = 'pink';
-              break;
-            case 'g':
-              c.color = 'green-light';
-              break;
-            case 'h':
-              c.color = 'red-light';
-              break            
-            default:
-              c.color = 'orange';
-           }
+            switch (letter) {
+              case 'a':
+                c.color = 'orange';
+                break;
+              case 'b':
+                c.color = 'green';
+                break;
+              case 'c':
+                c.color = 'blue';
+                break;
+              case 'd':
+                c.color = 'orange-light';
+                break;
+              case 'e':
+                c.color = 'purple';
+                break;
+              case 'f':
+                c.color = 'pink';
+                break;
+              case 'g':
+                c.color = 'green-light';
+                break;
+              case 'h':
+                c.color = 'red-light';
+                break            
+              default:
+                c.color = 'orange';
+            }
           
-          return c;
-        })
+            return c;
+          })
       },
       searchContact(value) {
         let timeout =  500;
