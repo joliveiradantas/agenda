@@ -190,7 +190,11 @@
     display: flex;    
     height: 5*$x;
     margin: 0 2*$x 0 2*$x;    
-    width: 176*$x;     
+    width: 176*$x;
+    
+     &:hover {
+      background-color: $very-light-pink;
+    }
   }
 
   .header {
@@ -210,7 +214,7 @@
     }
 
     li:nth-child(3) {
-      margin-right: 437px;
+      margin-right: 54.625*$x;
     }
   }
 
@@ -224,7 +228,7 @@
   }
 
   .contacts-list-column {
-    width: 345.75px;
+    width: 25%;
   }
 
   .contacts-list-letter {
@@ -235,10 +239,10 @@
 
   .oval {
     border-radius: 1.5*$x; 
-    height: 24px;
-    margin: 0 16px 0 0;
-    padding: 3px 5px 2px 6px;
-    width: 24px;
+    height: 3*$x;
+    margin: 0 2*$x 0 0;
+    padding: 0.375*$x 0.625*$x 0.25*$x 0.75*$x;
+    width: 3*$x;
 
     &.orange {
       background-color: $orange;
@@ -267,15 +271,20 @@
   }
 
   .email {
-    padding-left: 81.25px;
+    padding-left: 10.15625*$x;
   }
 
   .phone {
-    padding-left: 220.5px;
+    padding-left: 27.5625*$x;
   }
 
   .icons {
-    padding-left: 290.75px;
+    display: flex;
+    justify-content: flex-end;
+
+    img:nth-child(2) {
+      padding-left: 3*$x;
+    }
   }
 
   .contacts-list-enter-active, .contacts-list-leave-active {
@@ -284,5 +293,12 @@
   .contacts-list-enter, .contacts-list-leave-to {
     opacity: 0;
     transform: translateY(3.75*$x);
+  }
+
+  .contacts-list-enter-active, .contacts-list-enter-active {
+    transition: background-color 10s;
+  }
+  .contacts-list-enter, .contacts-list-enter-to {
+    background-color: $very-light-pink;
   }
 </style>
