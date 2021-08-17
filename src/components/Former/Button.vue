@@ -94,7 +94,7 @@
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 0.5px rgba(0, 0, 0, 0.08), inset 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 2px 4px 0.5px rgba(0, 0, 0, 0.16);
     display: flex;
     flex-direction: row;
-    font-size: 14px;
+    font-size: $font-medium;
     font-weight: 500;
     justify-content: flex-start;
     user-select: none;

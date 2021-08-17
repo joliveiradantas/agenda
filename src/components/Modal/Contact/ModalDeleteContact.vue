@@ -72,7 +72,7 @@
 
   .modal-delete-content {
     height: 11.5625*$x;
-    font-size: 1.75*$x;
+    font-size: $font-medium;
     padding: 2.4375*$x 0 0 3*$x;
   }
 </style>

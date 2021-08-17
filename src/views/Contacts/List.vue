@@ -182,7 +182,6 @@
 </script>
 
 <style lang="scss" scoped>
-  //TODO : Refactor com css grid
   @import '@/assets/stylesheets/_variables.scss';  
   
   .contacts-list {
@@ -201,7 +200,7 @@
 
   .header {
     color: $bluey-grey;
-    font-size: 1.625*$x;
+    font-size: $font-small;
     margin-bottom: 1px;
     margin-top: 2*$x;
     padding: 2*$x 0 1.125*$x 5.875*$x;
@@ -225,7 +224,7 @@
     border-top: none;
     cursor: pointer;
     display: flex;
-    font-size: 1.75*$x;
+    font-size: $font-medium;
     padding: $x 2*$x $x $x;
   }
 
@@ -235,7 +234,7 @@
 
   .contacts-list-letter {
     color: $white-two;
-    font-size: 1rem;
+    font-size: $font-default;
     text-align: center;
   }
 

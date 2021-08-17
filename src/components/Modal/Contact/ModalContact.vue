@@ -177,7 +177,7 @@
 
   .label {
     display: inline-block;
-    font-size: 1.75$x;
+    font-size: $font-medium;
     margin-bottom: 0.5*$x; 
   }  
 </style>

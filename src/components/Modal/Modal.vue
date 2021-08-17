@@ -136,7 +136,7 @@
   .cancel {
     color: $red;
     display: inline-block;
-    font-size: 1.75*$x;   
+    font-size: $font-medium;   
     margin: $x 0 0 34*$x;
 
     &.exclusion {
