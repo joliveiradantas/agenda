@@ -17,7 +17,7 @@
             :key="contact.id"
         >
           <span class="contacts-list-column contact">
-            <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
+            <a v-if="contactHasName(contact.name)" :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
             {{ contact.name | namelize }}
           </span>
           <span class="contacts-list-column email">
@@ -94,7 +94,7 @@
 
     methods: {
       firstLetter(name) {
-        return name.charAt(0).toUpperCase();
+        return name.trim().charAt(0).toUpperCase();
       },
       classes(color) {
         const classes = ['contacts-list-letter', 'oval'];
@@ -139,6 +139,9 @@
           
             return c;
           })
+      },
+      contactHasName(name) {
+        return name.trim();
       },
       searchContact(value) {
         let timeout =  500;
