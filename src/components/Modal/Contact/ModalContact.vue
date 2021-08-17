@@ -47,6 +47,7 @@
 
 <script>
   import { input } from '@/_CRUDL/helpers/form/fields';
+  import mixin from '@/helpers/mixins/mixin';
 
   import PopupModal from '@/components/Modal/Modal.vue';
   import FormerInput from '@/components/Former/Field/Input.vue';
@@ -57,6 +58,9 @@
       PopupModal,
       FormerInput
     },
+    mixins: [
+      mixin,
+    ],
     data() {
       return {        
         fieldName: {
@@ -107,17 +111,36 @@
         this.fieldEmail.value = this.contact.email;
         this.fieldPhone.value = this.contact.phone;
       },
-      updateContact(contact) {
-
-      },
       submit() {
-        const newContact = {
-          id: Math.floor((Math.random() * 100) + 8),
-          name: this.fieldName.value,
-          email: this.fieldEmail.value,
-          phone: this.fieldPhone.value,
+        if (this.contact) {
+          const { color, ...contactToEdit } = this.contact;
+
+          contactToEdit.name = this.fieldName.value;
+          contactToEdit.email = this.fieldEmail.value;
+          contactToEdit.phone = this.fieldPhone.value;   
+          
+          const index = this.findContactIndex(contactToEdit);
+          const clonedContacts = [...this.contacts];
+          clonedContacts.splice(index, 1, contactToEdit);
+          this.storeDataInBrowser(clonedContacts);
+
+          this.$emit('submit', clonedContacts);
+         
+        } else {
+
+          const newContact = {
+            id: Math.floor((Math.random() * 100) + 8),
+            name: this.fieldName.value,
+            email: this.fieldEmail.value,
+            phone: this.fieldPhone.value,
+          }
+
+          const clonedContacts = [...this.contacts];      
+          clonedContacts.push(newContact);
+          this.storeDataInBrowser(clonedContacts);
+
+          this.$emit('submit');
         }
-        this.$emit('save', newContact);
       },
     }
   }

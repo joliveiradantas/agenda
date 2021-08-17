@@ -7,6 +7,7 @@
       :exclusionModal="exclusionModal"
       buttonLabel="Excluir"
       @close="close"
+      @submit="submit"
     >
 
     <template v-slot:content>
@@ -22,11 +23,16 @@
 <script>
   import PopupModal from '@/components/Modal/Modal.vue';
 
+  import mixin from '@/helpers/mixins/mixin';
+
   export default {
     name: 'ModalDeleteContact',
     components: {
       PopupModal,
     },
+    mixins: [
+      mixin,
+    ],
     data() {
       return {
         deleteMessage: 'Deseja realmente excluir o contato?',
@@ -39,12 +45,24 @@
         type: String,
         default: '',
       },
+      contact: {
+        type: Object,
+        default: undefined,
+      },
     },
 
     methods: {
       close() {
         this.$emit('close');
-      }
+      },
+      submit() {
+        const index = this.findContactIndex(this.contact);
+        const clonedContacts = [...this.contacts];
+        clonedContacts.splice(index, 1);
+        this.storeDataInBrowser(clonedContacts);
+
+        this.$emit('delete', clonedContacts);
+      },
     },
   }
 </script>

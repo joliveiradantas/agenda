@@ -19,7 +19,7 @@
         v-if="showModal"
         :title="modalTitleContactCreation"
         @close="toggleModal"
-        @save="saveContact"
+        @submit="submit"
       >
       </modal-contact>
     </section>
@@ -63,24 +63,14 @@
       toggleModal() {
         this.showModal = !this.showModal;      
       },
-      getContactsFromBrowser() {
-        return JSON.parse(localStorage.getItem('contacts'));
-      },
       setContactsToBrowser() {        
-        const contacts =  this.getContactsFromBrowser();
+        const contacts =  this.contacts;
 
         if (contacts === null) {
           this.storeDataInBrowser(contactsData);
         }
       },
-      storeDataInBrowser(contacts) {
-        localStorage.setItem('contacts', JSON.stringify(contacts));
-      },
-      saveContact(contact) {
-        const contactsToAdd = [...this.contacts];      
-        contactsToAdd.push(contact);
-        this.storeDataInBrowser(contactsToAdd);
-        
+      submit() {
         this.toggleModal();
         
         this.$router.push({

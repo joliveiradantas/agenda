@@ -26,11 +26,11 @@
           <span class="contacts-list-column icons">
             <img src="@/assets/images/ic-edit.svg" 
                  class="ic_edit"
-                 @click="toggleModal(contact)"
+                 @click="toggleModalContact(contact)"
             >
             <img src="@/assets/images/ic-delete.svg" 
                  class="ic_delete"
-                 @click="toggleDeleteModal"
+                 @click="toggleDeleteModal(contact)"
             >
           </span>
         </li>
@@ -41,14 +41,17 @@
       v-if="showModal"
       :title="modalTitleContactEdition"
       :contact="selectedContact"
-      @close="cancel"      
+      @submit="submit"
+      @close="cancelModalContact"      
     >
     </modal-contact>
 
     <modal-delete-contact 
       v-if="showDeleteModal"
       title="Excluir contato"
-      @close="toggleDeleteModal"
+      :contact="selectedContact"
+      @close="cancelDeleteModal"
+      @delete="deleteContact"
     >
     </modal-delete-contact>
   </div>
@@ -82,7 +85,7 @@
       }
     },
 
-    mounted () {
+    created () {
       this.formerOvalColor();
     },
 
@@ -96,8 +99,8 @@
         classes.push(color);
         return classes;
       },
-      formerOvalColor() {
-        this.clonedContacts = this.contacts.map(c => {
+      formerOvalColor(contacts = this.contacts) {
+        this.clonedContacts = contacts.map(c => {
           const letter = (this.firstLetter(c.name)).toLowerCase();
 
            switch (letter) {
@@ -143,17 +146,32 @@
                               ? [...this.contacts.filter(c => c.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)]      
                               : this.contacts;
       },
-      toggleModal(contact) {
+      toggleModalContact(contact) {
         this.selectedContact = contact;
         this.showModal = !this.showModal;      
       },
-      cancel() {
+      cancelModalContact() {
         this.selectedContact = undefined;
-        this.showModal = !this.showModal; 
+        this.showModal = !this.showModal;
       },
-      toggleDeleteModal() {
+      deleteContact(updatedContacts) {
+        this.clonedContacts = updatedContacts;
+        this.formerOvalColor(updatedContacts);
+        this.cancelDeleteModal();
+      },
+      toggleDeleteModal(contact) {
+        this.selectedContact = contact;
         this.showDeleteModal = !this.showDeleteModal;
       },
+      cancelDeleteModal() {
+        this.selectedContact = undefined;
+        this.showDeleteModal = !this.showDeleteModal;
+      },
+      submit(updatedContacts) {
+        this.clonedContacts = updatedContacts;
+        this.formerOvalColor(updatedContacts);
+        this.cancelModalContact();
+      }
     }
   }
 </script>
