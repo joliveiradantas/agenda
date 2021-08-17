@@ -19,6 +19,7 @@
             :buttonType="buttonType"
             :wider="wider"
             :label="buttonLabel"
+            @click="submit"
           >
           </former-button>  
         </div>
@@ -82,7 +83,10 @@
     methods: {
       cancel() {
         this.$emit('close');
-      }
+      },
+      submit() {
+        this.$emit('submit');
+      },
     },
   };
 </script>

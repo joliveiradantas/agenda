@@ -4,7 +4,6 @@
     <input v-if="type === 'default'"
       :class="classes"
       v-bind="options"
-      :value="value"
       @input="input"
     />
     <input v-else-if="type === 'search'"
@@ -48,6 +47,7 @@
         return {
           id: field.id,
           placeholder: field.placeholder,
+          value: field.value,
           ref: 'input',
         };
       },
@@ -103,9 +103,11 @@
     border: solid 1px $cloudy-blue;
     border-radius: 0.5*$x;
     height: 4*$x;
+    padding: 1.125*$x 0 0.875*$x 1.25*$x;
     width: 48*$x;
     
     &.small {
+      padding: $x 0 $x 1.25*$x;
       width: 16*$x;
     }
   }

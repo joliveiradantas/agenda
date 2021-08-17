@@ -5,21 +5,38 @@
       buttonType="defaultButton"
       buttonLabel="Salvar"
       @close="close"
+      @submit="submit"
     >
 
     <template v-slot:content>
       <div class="form-content">
         <div class="form-field">
-          <label class="label">Nome</label>
-          <former-input type="default" class="input" />
+          <label class="label">{{ fieldName.label }}</label>
+          <former-input 
+            type="default" 
+            class="input" 
+            :field="fieldName"
+            v-model="fieldName.value"
+          />
         </div>
         <div class="form-field">
-          <label class="label">Email</label>
-          <former-input type="default" class="input" />
+          <label class="label">{{ fieldEmail.label }}</label>
+          <former-input 
+            type="default" 
+            class="input" 
+            :field="fieldEmail"
+            v-model="fieldEmail.value"
+          />
         </div>
         <div class="form-field">
-          <label class="label">Telefone</label>
-          <former-input type="default" size="small" class="input" />
+          <label class="label">{{ fieldPhone.label }}</label>
+          <former-input 
+            type="default" 
+            size="small" 
+            class="input" 
+            :field="fieldPhone"
+            v-model="fieldPhone.value"
+          />
         </div>        
       </div>
     </template>
@@ -29,6 +46,8 @@
 </template>
 
 <script>
+  import { input } from '@/_CRUDL/helpers/form/fields';
+
   import PopupModal from '@/components/Modal/Modal.vue';
   import FormerInput from '@/components/Former/Field/Input.vue';
 
@@ -38,18 +57,69 @@
       PopupModal,
       FormerInput
     },
+    data() {
+      return {        
+        fieldName: {
+          ...input,
+          id: 'name',
+          label: 'Name',
+          value: '',
+        },
+        fieldEmail: {
+          ...input,
+          id: 'email',
+          label: 'E-mail',
+          value: '',
+        },
+        fieldPhone: {
+          ...input,
+          id: 'phone',
+          label: 'Telefone',
+          value: '',
+        },
+      }
+    },
     props: {
       title: {
         type: String,
         default: '',
       },
+      contact: {
+        type: Object,
+        default: undefined,
+      },
+    },
+
+    mounted () {
+      this.fillContact();
     },
 
     methods: {
       close() {
         this.$emit('close');
-      }
-    },
+      },
+      fillContact() {
+        if(!this.contact) {
+          return;
+        }
+
+        this.fieldName.value = this.contact.name;
+        this.fieldEmail.value = this.contact.email;
+        this.fieldPhone.value = this.contact.phone;
+      },
+      updateContact(contact) {
+
+      },
+      submit() {
+        const newContact = {
+          id: Math.floor((Math.random() * 100) + 8),
+          name: this.fieldName.value,
+          email: this.fieldEmail.value,
+          phone: this.fieldPhone.value,
+        }
+        this.$emit('save', newContact);
+      },
+    }
   }
 </script>
 

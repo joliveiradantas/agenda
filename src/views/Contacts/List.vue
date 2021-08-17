@@ -10,12 +10,12 @@
     <ol>
       <transition-group name="contacts-list">
         <li class="contacts-list body" 
-            v-for="contact in contacts"
+            v-for="contact in clonedContacts"
             :key="contact.id"
         >
           <span class="contacts-list-column contact">
             <a :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
-            {{ contact.name }}
+            {{ contact.name | namelize }}
           </span>
           <span class="contacts-list-column email">
             {{ contact.email }}
@@ -26,7 +26,7 @@
           <span class="contacts-list-column icons">
             <img src="@/assets/images/ic-edit.svg" 
                  class="ic_edit"
-                 @click="toggleModal"
+                 @click="toggleModal(contact)"
             >
             <img src="@/assets/images/ic-delete.svg" 
                  class="ic_delete"
@@ -40,7 +40,8 @@
     <modal-contact 
       v-if="showModal"
       :title="modalTitleContactEdition"
-      @close="toggleModal"
+      :contact="selectedContact"
+      @close="cancel"      
     >
     </modal-contact>
 
@@ -54,10 +55,11 @@
 </template>
 
 <script>
-  import { contactsData } from '@/shared/data';
   import NavigationHeader from '@/components/Navigation/Header.vue';
   import ModalContact from '@/components/Modal/Contact/ModalContact.vue';
-  import ModalDeleteContact from '@/components/Modal/Contact/ModalDeleteContact.vue';  
+  import ModalDeleteContact from '@/components/Modal/Contact/ModalDeleteContact.vue';
+
+  import mixin from '@/helpers/mixins/mixin';
 
   export default {
     name: 'ContactsList',
@@ -66,18 +68,18 @@
       ModalContact,
       ModalDeleteContact
     },
+    mixins: [
+      mixin,
+    ],
     data() {
       return {
-        contacts: [],
         searchingTimeout: null,
         modalTitleContactEdition: 'Editar contato',
         showModal: false,
         showDeleteModal: false,
+        selectedContact: undefined,
+        clonedContacts: undefined,
       }
-    },
-
-    created () {
-      this.loadContacts();     
     },
 
     mounted () {
@@ -85,11 +87,8 @@
     },
 
     methods: {
-      loadContacts() {
-        this.contacts = contactsData;        
-      },      
       firstLetter(name) {
-        return name.charAt(0);
+        return name.charAt(0).toUpperCase();
       },
       classes(color) {
         const classes = ['contacts-list-letter', 'oval'];
@@ -98,7 +97,7 @@
         return classes;
       },
       formerOvalColor() {
-        this.contacts = this.contacts.map(c => {
+        this.clonedContacts = this.contacts.map(c => {
           const letter = (this.firstLetter(c.name)).toLowerCase();
 
            switch (letter) {
@@ -140,17 +139,21 @@
         this.searchingTimeout = setTimeout(this.filterContacts, timeout, value);
       },
       filterContacts(param) {        
-        this.contacts = param 
-                              ? [...this.contacts.filter(c => c.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)]         
-                              : contactsData;
+        this.clonedContacts = param 
+                              ? [...this.contacts.filter(c => c.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)]      
+                              : this.contacts;
       },
-      toggleModal() {
+      toggleModal(contact) {
+        this.selectedContact = contact;
         this.showModal = !this.showModal;      
       },
+      cancel() {
+        this.selectedContact = undefined;
+        this.showModal = !this.showModal; 
+      },
       toggleDeleteModal() {
-        this.showDeleteModal = !this.showDeleteModal;  
-
-      }
+        this.showDeleteModal = !this.showDeleteModal;
+      },
     }
   }
 </script>

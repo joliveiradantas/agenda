@@ -19,6 +19,7 @@
         v-if="showModal"
         :title="modalTitleContactCreation"
         @close="toggleModal"
+        @save="saveContact"
       >
       </modal-contact>
     </section>
@@ -26,9 +27,13 @@
 </template>
 
 <script>
+  import { contactsData } from '@/shared/data';
+
   import NavigationHeader from '@/components/Navigation/Header.vue';
   import FormerButton from '@/components/Former/Button.vue';
   import ModalContact from '@/components/Modal/Contact/ModalContact.vue';
+
+  import mixin from '@/helpers/mixins/mixin';
 
   export default {
     name: 'HomeIndex',
@@ -37,6 +42,9 @@
       FormerButton,
       ModalContact
     },
+    mixins: [
+      mixin,
+    ],
     data() {
       return {
         messageBookEmpty: 'Nenhum contato foi criado ainda.',
@@ -47,10 +55,38 @@
       }
     },
 
+    created () {
+      this.setContactsToBrowser();
+    },
+
     methods: {
       toggleModal() {
         this.showModal = !this.showModal;      
       },
+      getContactsFromBrowser() {
+        return JSON.parse(localStorage.getItem('contacts'));
+      },
+      setContactsToBrowser() {        
+        const contacts =  this.getContactsFromBrowser();
+
+        if (contacts === null) {
+          this.storeDataInBrowser(contactsData);
+        }
+      },
+      storeDataInBrowser(contacts) {
+        localStorage.setItem('contacts', JSON.stringify(contacts));
+      },
+      saveContact(contact) {
+        const contactsToAdd = [...this.contacts];      
+        contactsToAdd.push(contact);
+        this.storeDataInBrowser(contactsToAdd);
+        
+        this.toggleModal();
+        
+        this.$router.push({
+          name: 'contacts-list',
+        });        
+      },      
     },
   }  
 </script>
