@@ -50,6 +50,8 @@ by [Janile Dantas](https://www.linkedin.com/in/janile-oliveira-dantas-60211411b/
 - Os contatos adicionados que tenham a primeira letra dentro do intervalo [i-z] terão a cor do oval igual a orange(#fa8d68);
 
 ## TODO
+
+- Máscaras e validações para os campos do formulário;
 - Aplicação de testes unitários e e2e;
 - Aplicação do css grid para a lista de contatos;
 - Adaptar o layout para o design responsivo;
