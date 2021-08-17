@@ -1,6 +1,9 @@
 <template>
   <div>
-    <navigation-header @input="searchContact"/>
+    <navigation-header 
+      @input="searchContact"
+      @addContact="toggleModalContact"
+    />
 
     <ul class="contacts-list header">
       <li>Contatos</li>

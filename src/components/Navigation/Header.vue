@@ -8,6 +8,7 @@
       icon="plus" 
       :label="buttonLabel"
       :buttonType="buttonType"
+      @click="click"
     >      
     </former-button>
 
@@ -41,6 +42,9 @@
     methods: {
       input(value) {
         this.$emit('input', value);
+      },
+      click() {
+        this.$emit('addContact');
       }
     },
   }

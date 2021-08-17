@@ -139,7 +139,7 @@
           clonedContacts.push(newContact);
           this.storeDataInBrowser(clonedContacts);
 
-          this.$emit('submit');
+          this.$emit('submit', clonedContacts);
         }
       },
     }
