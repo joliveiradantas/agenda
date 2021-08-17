@@ -4,6 +4,7 @@
       :title="title"
       buttonType="defaultButton"
       buttonLabel="Salvar"
+      :buttonActive="buttonActive"
       @close="close"
       @submit="submit"
     >
@@ -92,6 +93,14 @@
         type: Object,
         default: undefined,
       },
+    },
+
+    computed: {
+      buttonActive() {
+        return this.fieldName.value !== ''
+            || this.fieldEmail.value !== ''
+            || this.fieldPhone.value !== '';
+      }
     },
 
     mounted () {

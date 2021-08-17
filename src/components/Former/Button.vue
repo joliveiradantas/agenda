@@ -3,6 +3,7 @@
     is="button" 
     ref="button" 
     :class="classes"
+    :disabled="buttonDisabled"
     @click="click"
   >    
     <img v-if="icon" :src="iconPath" class="icon">
@@ -33,10 +34,10 @@
         type: Boolean,
         default: false,
       },
-      wider: {
+      buttonActive: {
         type: Boolean,
-        default: false,
-      },
+        default: true,
+      }
     },
     computed: {
       classes() {
@@ -51,8 +52,11 @@
         if(this.buttonType === 'defaultButton') {
           classes.push('default-button');          
         }
-        if(this.wider) {
-          classes.push('wider');
+        if(this.buttonType === 'deleteButton') {
+          classes.push('delete-button');
+        }
+        if(this.buttonActive) {
+          classes.push('active');
         }
 
         return classes;
@@ -61,6 +65,9 @@
         if(this.icon === 'plus') {
           return require('@/assets/images/ic-plus.svg');
         }
+      },
+      buttonDisabled() {
+        return this.buttonType === 'defaultButton' && !this.buttonActive;
       }
     },
 
@@ -75,7 +82,7 @@
 <style lang="scss" scoped>
   @import '@/assets/stylesheets/_variables.scss';
 
-  @mixin former-button($background-color, $color: $white) {
+  @mixin former-button($background-color, $color) {
     background-color: $background-color;
     color: $color;
   }
@@ -111,12 +118,21 @@
 
     height: 4*$x;
     padding: $x 2*$x $x 2*$x;
+    opacity: 0.32;
     width: 9*$x;
 
-    &.wider {
-      width: 10*$x;
+    &.active {
+      opacity: 1;
     }
   }
+
+  .delete-button {
+    @include former-button($red, $white-two);
+
+    height: 4*$x;
+    padding: $x 2*$x $x 2*$x;
+    width: 10*$x;
+  }  
 
   .icon {
     margin-right: $x;

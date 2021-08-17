@@ -2,10 +2,11 @@
   <div>
     <popup-modal      
       :title="title"
-      buttonType="defaultButton"
-      :wider="wider"
-      :exclusionModal="exclusionModal"
+      buttonType="deleteButton"
       buttonLabel="Excluir"
+
+      :exclusionModal="exclusionModal"
+
       @close="close"
       @submit="submit"
     >
@@ -37,7 +38,6 @@
       return {
         deleteMessage: 'Deseja realmente excluir o contato?',
         exclusionModal: true,
-        wider: true,
       }
     },
     props: {

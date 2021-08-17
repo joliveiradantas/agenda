@@ -17,7 +17,7 @@
           </span>
           <former-button
             :buttonType="buttonType"
-            :wider="wider"
+            :buttonActive="buttonActive"
             :label="buttonLabel"
             @click="submit"
           >
@@ -53,9 +53,9 @@
         type: String,
         default: '',
       },
-      wider: {
+      buttonActive: {
         type: Boolean,
-        default: false,
+        default: true,
       }
     },
 
