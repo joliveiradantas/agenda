@@ -25,8 +25,8 @@ by [Janile Dantas](https://www.linkedin.com/in/janile-oliveira-dantas-60211411b/
 
 ## Rotas
 
-/         - Página inicial da Agenda;
-/contatos - Página da lista de contatos da Agenda;
+- /         - Página inicial da Agenda;
+- /contatos - Página da lista de contatos da Agenda - (o efeito do highlight na linha do contato que é adicionado acontece quando o mesmo é adicionado nesta rota);
 
 ## Problemas ou Sugestões
 
