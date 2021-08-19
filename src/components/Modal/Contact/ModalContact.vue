@@ -47,6 +47,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
+
   import { input } from '@/_CRUDL/helpers/form/fields';
   import mixin from '@/helpers/mixins/mixin';
 
@@ -108,6 +110,8 @@
     },
 
     methods: {
+      ...mapActions(['updateContact', 'addContact']),
+
       close() {
         this.$emit('close');
       },
@@ -126,14 +130,11 @@
 
           contactToEdit.name = this.fieldName.value;
           contactToEdit.email = this.fieldEmail.value;
-          contactToEdit.phone = this.fieldPhone.value;   
+          contactToEdit.phone = this.fieldPhone.value;
           
-          const index = this.findContactIndex(contactToEdit);
-          const clonedContacts = [...this.contacts];
-          clonedContacts.splice(index, 1, contactToEdit);
-          this.storeDataInBrowser(clonedContacts);
-
-          this.$emit('submit', clonedContacts);
+          this.updateContact(contactToEdit);         
+          
+          this.$emit('submit');
          
         } else {
 
@@ -144,11 +145,9 @@
             phone: this.fieldPhone.value,
           }
 
-          const clonedContacts = [...this.contacts];      
-          clonedContacts.push(newContact);
-          this.storeDataInBrowser(clonedContacts);
+          this.addContact(newContact);         
 
-          this.$emit('submit', clonedContacts);
+          this.$emit('submit');
         }
       },
     }

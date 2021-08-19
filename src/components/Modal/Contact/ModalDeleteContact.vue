@@ -22,18 +22,15 @@
 </template>
 
 <script>
-  import PopupModal from '@/components/Modal/Modal.vue';
+  import { mapActions } from 'vuex';
 
-  import mixin from '@/helpers/mixins/mixin';
+  import PopupModal from '@/components/Modal/Modal.vue';
 
   export default {
     name: 'ModalDeleteContact',
     components: {
       PopupModal,
     },
-    mixins: [
-      mixin,
-    ],
     data() {
       return {
         deleteMessage: 'Deseja realmente excluir o contato?',
@@ -52,16 +49,15 @@
     },
 
     methods: {
+      ...mapActions(['deleteContact']),
+
       close() {
         this.$emit('close');
       },
       submit() {
-        const index = this.findContactIndex(this.contact);
-        const clonedContacts = [...this.contacts];
-        clonedContacts.splice(index, 1);
-        this.storeDataInBrowser(clonedContacts);
+        this.deleteContact(this.contact)
 
-        this.$emit('delete', clonedContacts);
+        this.$emit('delete');
       },
     },
   }

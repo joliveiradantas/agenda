@@ -1,7 +1,7 @@
 <template>
   <div>
     <navigation-header 
-      @input="searchContact"
+      @input="setSearchValue"
       @addContact="toggleModalContact"
     />
 
@@ -13,11 +13,11 @@
     <ol>
       <transition-group name="contacts-list">
         <li class="contacts-list body" 
-            v-for="contact in clonedContacts"
+            v-for="contact in contactsListFiltered"
             :key="contact.id"
         >
           <span class="contacts-list-column contact">
-            <a v-if="contactHasName(contact.name)" :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
+            <a v-if="contactHasName(contact)" :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
             {{ contact.name | namelize }}
           </span>
           <span class="contacts-list-column email">
@@ -54,13 +54,15 @@
       title="Excluir contato"
       :contact="selectedContact"
       @close="cancelDeleteModal"
-      @delete="deleteContact"
+      @delete="cancelDeleteModal"
     >
     </modal-delete-contact>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
+
   import NavigationHeader from '@/components/Navigation/Header.vue';
   import ModalContact from '@/components/Modal/Contact/ModalContact.vue';
   import ModalDeleteContact from '@/components/Modal/Contact/ModalDeleteContact.vue';
@@ -84,12 +86,29 @@
         showModal: false,
         showDeleteModal: false,
         selectedContact: undefined,
-        clonedContacts: undefined,
+        searchParam: '',
       }
     },
 
-    created () {
-      this.formerOvalColor();
+    computed: {
+      ...mapState(['contacts']),
+
+      clonedContacts() {
+        return this.contacts;
+      },
+      contactsListFiltered() {
+        return this.clonedContacts
+          .filter(c => c.name.toLowerCase().indexOf(this.searchParam.toLowerCase()) !== -1)
+          .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))          
+      },
+    },
+
+    mounted () {
+      this.$store.dispatch('getContacts');
+    },
+
+    beforeDestroy () {      
+      clearTimeout(this.searchingTimeout);
     },
 
     methods: {
@@ -102,57 +121,54 @@
         classes.push(color);
         return classes;
       },
-      formerOvalColor(contacts = this.contacts) {
-        this.clonedContacts = contacts
-          .sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))
-          .map(c => {
-            const letter = (this.firstLetter(c.name)).toLowerCase();
+      formerOvalColor(contact) {
+        
+        const firstLetter = contact.name.trim().charAt(0).toLowerCase();
 
-            switch (letter) {
-              case 'a':
-                c.color = 'orange';
-                break;
-              case 'b':
-                c.color = 'green';
-                break;
-              case 'c':
-                c.color = 'blue';
-                break;
-              case 'd':
-                c.color = 'orange-light';
-                break;
-              case 'e':
-                c.color = 'purple';
-                break;
-              case 'f':
-                c.color = 'pink';
-                break;
-              case 'g':
-                c.color = 'green-light';
-                break;
-              case 'h':
-                c.color = 'red-light';
-                break            
-              default:
-                c.color = 'orange';
-            }
-          
-            return c;
-          })
+        switch (firstLetter) {
+          case 'a':
+            contact.color = 'orange';
+            break;
+          case 'b':
+            contact.color = 'green';
+            break;
+          case 'c':
+            contact.color = 'blue';
+            break;
+          case 'd':
+            contact.color = 'orange-light';
+            break;
+          case 'e':
+            contact.color = 'purple';
+            break;
+          case 'f':
+            contact.color = 'pink';
+            break;
+          case 'g':
+            contact.color = 'green-light';
+            break;
+          case 'h':
+            contact.color = 'red-light';
+            break            
+          default:
+            contact.color = 'orange';
+        }
       },
-      contactHasName(name) {
-        return name.trim();
+      contactHasName(contact) {
+        const hasName = contact.name.trim();
+        if (hasName) {
+          this.formerOvalColor(contact);
+        }
+        return hasName;
       },
-      searchContact(value) {
+      setSearchValue(value) {
+        this.searchParam = value;
+        this.searchContact(); 
+      },
+      searchContact() {
         let timeout =  500;
         clearTimeout(this.searchingTimeout);
-
-        this.searchingTimeout = setTimeout(this.filterContacts, timeout, value);
-      },
-      filterContacts(param) {        
-        this.clonedContacts = param 
-                              ? [...this.contacts.filter(c => c.name.toLowerCase().indexOf(param.toLowerCase()) !== -1)]      
-                              : this.contacts;
+        this.searchingTimeout = setTimeout(timeout);
       },
       toggleModalContact(contact) {
         this.selectedContact = contact;
@@ -162,11 +178,6 @@
         this.selectedContact = undefined;
         this.showModal = !this.showModal;
       },
-      deleteContact(updatedContacts) {
-        this.clonedContacts = updatedContacts;
-        this.formerOvalColor(updatedContacts);
-        this.cancelDeleteModal();
-      },
       toggleDeleteModal(contact) {
         this.selectedContact = contact;
         this.showDeleteModal = !this.showDeleteModal;
@@ -175,9 +186,7 @@
         this.selectedContact = undefined;
         this.showDeleteModal = !this.showDeleteModal;
       },
-      submit(updatedContacts) {
-        this.clonedContacts = updatedContacts;
-        this.formerOvalColor(updatedContacts);
+      submit() {
         this.cancelModalContact();
       }
     }
@@ -237,6 +246,7 @@
 
   .contacts-list-letter {
     color: $white-two;
+    display: inline-block;
     font-size: $font-default;
     text-align: center;
   }

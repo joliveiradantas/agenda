@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
+
   import { contactsData } from '@/shared/data';
 
   import NavigationHeader from '@/components/Navigation/Header.vue';
@@ -55,18 +57,26 @@
       }
     },
 
-    created () {
-      this.setContactsToBrowser();
+    computed: {
+      ...mapState(['contacts']),
+
+      clonedContacts() {
+        return this.contacts;
+      }
+    },
+
+    mounted () {
+      this.$store.dispatch('getContacts').then(this.setContactsToBrowser());
     },
 
     methods: {
       toggleModal() {
         this.showModal = !this.showModal;      
       },
-      setContactsToBrowser() {        
-        const contacts =  this.contacts;
+      setContactsToBrowser() {
+        const contacts = this.clonedContacts;
 
-        if (contacts === null) {
+        if (contacts.length === 0) {
           this.storeDataInBrowser(contactsData);
         }
       },
@@ -85,14 +95,14 @@
   @import '@/assets/stylesheets/variables/_sizes.scss';
 
   .home-index-content {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
 
   .ic_book {
-    margin-top: 12*$x;  
     margin-bottom: 3*$x;
+    margin-top: 12*$x;  
   }
 
   .message {
