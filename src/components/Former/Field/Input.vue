@@ -3,6 +3,7 @@
 
     <input v-if="type === 'default'"
       :class="classes"
+      v-mask="pattern"
       v-bind="options"
       @input="input"
     />
@@ -57,8 +58,17 @@
         if(this.size === 'small') {
           classes.push('small');
         }
+        if(this.field.errors) {
+          classes.push('error');
+        }
 
         return classes;
+      },
+      pattern() {
+        if (this.field.mask.type) {          
+          return '(##) #####-####';
+        }
+        return '';
       },
     },
 
@@ -71,6 +81,8 @@
         if (!input) {
           return;
         }
+
+        this.field.errors = false;
 
         this.$emit('input', input.value);        
       },
@@ -109,6 +121,10 @@
     &.small {
       padding: $x 0 $x 1.25*$x;
       width: 16*$x;
+    }
+
+    &.error {
+      border: solid 1px $red-light;
     }
   }
 </style>

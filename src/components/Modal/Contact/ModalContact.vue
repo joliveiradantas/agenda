@@ -6,7 +6,7 @@
       buttonLabel="Salvar"
       :buttonActive="buttonActive"
       @close="close"
-      @submit="submit"
+      @submit="checkForm"
     >
 
     <template v-slot:content>
@@ -82,6 +82,9 @@
           ...input,
           id: 'phone',
           label: 'Telefone',
+          mask: {
+            type: 'phone',
+          },
           value: '',
         },
       }
@@ -123,6 +126,21 @@
         this.fieldName.value = this.contact.name;
         this.fieldEmail.value = this.contact.email;
         this.fieldPhone.value = this.contact.phone;
+      },
+      checkForm() {
+        if (!this.fieldName.value) {
+          this.fieldName.errors = true;
+        }
+        if (!this.fieldEmail.value) {
+          this.fieldEmail.errors = true;
+        }
+        if (!this.fieldPhone.value) {
+          this.fieldPhone.errors = true;
+        }
+
+        if(!this.fieldName.errors && !this.fieldEmail.errors && !this.fieldPhone.errors) {
+          this.submit();
+        }
       },
       submit() {
         if (this.contact) {

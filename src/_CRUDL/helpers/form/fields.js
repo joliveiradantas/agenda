@@ -2,7 +2,7 @@ export const input = {
   callback: null,
   data: {},
   editing: false,
-  errors: [],
+  errors: false,
   mask: {},
   processing: false,
   skip: false,
