@@ -29,7 +29,7 @@
             v-model="fieldEmail.value"
           />
         </div>
-        <div class="form-field">
+        <div :class="classes">
           <label class="label">{{ fieldPhone.label }}</label>
           <former-input 
             type="default" 
@@ -76,6 +76,9 @@
           ...input,
           id: 'email',
           label: 'E-mail',
+          validations: {
+            type: 'email',
+          },
           value: '',
         },
         fieldPhone: {
@@ -105,7 +108,18 @@
         return this.fieldName.value !== ''
             || this.fieldEmail.value !== ''
             || this.fieldPhone.value !== '';
-      }
+      },
+      classes() {
+        const classes = ['form-field'];
+
+        if (this.fieldEmail.validated) {
+          classes.push('with-padding-top');
+        } else {
+          classes.push('without-padding-top');
+        }
+
+        return classes;
+      },
     },
 
     mounted () {
@@ -184,9 +198,14 @@
     }
 
     .form-field:nth-child(3) {
-      padding-top: 1.75*$x;
-    }
-  }
+      &.with-padding-top {
+        padding-top: 14px;
+      }
+      &.without-padding-top {
+        padding-top: 0;
+      }
+    } 
+  }  
 
   .form-field {
     margin: 0 3*$x 0 3*$x;

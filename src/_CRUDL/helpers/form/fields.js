@@ -7,10 +7,8 @@ export const input = {
   processing: false,
   skip: false,
   type: 'input',
-  validated: null,
+  validated: true,
   validable: false,
-  validations: [{
-    type: 'blank',
-  }],
+  validations: [],
   value: undefined,
 };

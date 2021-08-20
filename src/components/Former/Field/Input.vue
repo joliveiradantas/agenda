@@ -6,6 +6,7 @@
       v-mask="pattern"
       v-bind="options"
       @input="input"
+      @blur="blur"
     />
     <input v-else-if="type === 'search'"
       class="busca_field"
@@ -14,13 +15,21 @@
       @input="input"
     />
 
+    <span class="validation-message" v-if="!field.validated">{{ validationMessage }}</span>
+
   </div>
 </template>
 
 <script>
+  import emailValidator from '@/helpers/validators/email';
 
   export default {
     name: 'FormerInput',
+    data() {
+      return {
+        validationMessage: '',
+      }
+    },
     props: {
       field: {
         type: Object,
@@ -65,7 +74,7 @@
         return classes;
       },
       pattern() {
-        if (this.field.mask.type) {          
+        if (this.field.mask.type === 'phone') {          
           return '(##) #####-####';
         }
         return '';
@@ -82,9 +91,30 @@
           return;
         }
 
-        this.field.errors = false;
+        this.clearValidations();
 
         this.$emit('input', input.value);        
+      },
+      blur() {
+        if(this.field.validations.type === 'email') {
+          const isValid = !emailValidator(this.field.value);
+
+          if(!isValid) {
+            this.setValidationMessage('não é um email válido'); 
+            this.setErrorValidation();
+          }
+        }
+      },
+      clearValidations() {
+        this.field.errors = false;
+        this.field.validated = true;
+      },
+      setErrorValidation() {
+        this.field.errors = true;
+        this.field.validated = false;
+      },
+      setValidationMessage(message) {
+        this.validationMessage = message;
       },
     },
   };
@@ -126,5 +156,11 @@
     &.error {
       border: solid 1px $red-light;
     }
+  }
+
+  .validation-message {
+    color: $red-light;
+    font-size: 8px;
+    margin-top: 2px; 
   }
 </style>
