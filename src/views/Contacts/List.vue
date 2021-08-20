@@ -10,35 +10,31 @@
       <li>E-mail</li>
       <li>Telefone</li>
     </ul>
-    <ol>
-      <transition-group name="contacts-list">
-        <li class="contacts-list body" 
-            v-for="contact in contactsListFiltered"
-            :key="contact.id"
-        >
-          <span class="contacts-list-column contact">
-            <a v-if="contactHasName(contact)" :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
-            {{ contact.name | namelize }}
-          </span>
-          <span class="contacts-list-column email">
-            {{ contact.email }}
-          </span>
-          <span class="contacts-list-column phone">
-            {{ contact.phone }}
-          </span>
-          <span class="contacts-list-column icons">
-            <img src="@/assets/images/ic-edit.svg" 
-                 class="ic_edit"
-                 @click="toggleModalContact(contact)"
-            >
-            <img src="@/assets/images/ic-delete.svg" 
-                 class="ic_delete"
-                 @click="toggleDeleteModal(contact)"
-            >
-          </span>
-        </li>
-      </transition-group>      
-    </ol>
+    <transition-group name="contacts-list" tag="ol">
+      <li class="contacts-list body" 
+          v-for="contact in contactsListFiltered"
+          :key="contact.id"
+      >
+        <span>
+          <a v-if="contactHasName(contact)" :class="classes(contact.color)">{{ firstLetter(contact.name) }}</a>
+          {{ contact.name | namelize }}
+        </span>
+        <span>
+          {{ contact.email }}
+        </span>
+        <span>
+          {{ contact.phone }}
+        </span>
+        <span class="contacts-list-column-icons">
+          <img src="@/assets/images/ic-edit.svg" 
+                @click="toggleModalContact(contact)"
+          >
+          <img src="@/assets/images/ic-delete.svg"
+               @click="toggleDeleteModal(contact)"
+          >
+        </span>
+      </li>
+    </transition-group>     
 
     <modal-contact 
       v-if="showModal"
@@ -199,49 +195,42 @@
   .contacts-list {
     background-color: $white-two;
     border: solid 1px $white;
-    border-radius: 0.5*$x;  
-    display: flex;    
+    border-radius: 0.5*$x;
     height: 5*$x;
     margin: 0 2*$x 0 2*$x;    
-    width: 176*$x;
-    
-     &:hover {
-      background-color: $very-light-pink;
-    }
+    width: 176*$x;  
   }
 
   .header {
     color: $bluey-grey;
+    display: grid;
     font-size: $font-small;
+    grid-template-columns: 48.5*$x 60.625*$x 61*$x;
     margin-bottom: 1px;
     margin-top: 2*$x;
     padding: 2*$x 0 1.125*$x 5.875*$x;
-
-    
-    li:first-child {
-      margin-right: 41.875*$x;
-    }
-
-    li:nth-child(2) {
-      margin-right: 56.125*$x;
-    }
-
-    li:nth-child(3) {
-      margin-right: 54.625*$x;
-    }
   }
 
   .body {
-    align-items: center;
     border-top: none;
     cursor: pointer;
-    display: flex;
+    display: grid;
+    grid-template-columns: 53.375*$x 60.625*$x 52*$x 7*$x;
     font-size: $font-medium;
     padding: $x 2*$x $x $x;
+
+    &:hover {
+      background-color: $very-light-pink;
+    }
   }
 
-  .contacts-list-column {
-    width: 25%;
+  .contacts-list-column-icons {
+    display: flex;
+    justify-content: flex-end;
+
+    :first-child {
+      margin-right: 3*$x;
+    }
   }
 
   .contacts-list-letter {
@@ -281,23 +270,6 @@
     }
     &.red-light {
       background-color: $red-light;
-    }
-  }
-
-  .email {
-    padding-left: 10.15625*$x;
-  }
-
-  .phone {
-    padding-left: 27.5625*$x;
-  }
-
-  .icons {
-    display: flex;
-    justify-content: flex-end;
-
-    img:nth-child(2) {
-      padding-left: 3*$x;
     }
   }
 
