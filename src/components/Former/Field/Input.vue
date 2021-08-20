@@ -160,7 +160,6 @@
 
   .validation-message {
     color: $red-light;
-    font-size: 8px;
-    margin-top: 2px; 
+    font-size: $font-smallest;
   }
 </style>

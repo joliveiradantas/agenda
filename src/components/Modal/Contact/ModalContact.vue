@@ -199,7 +199,7 @@
 
     .form-field:nth-child(3) {
       &.with-padding-top {
-        padding-top: 14px;
+        padding-top: 1.75*$x;
       }
       &.without-padding-top {
         padding-top: 0;
