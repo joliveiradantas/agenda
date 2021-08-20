@@ -25,12 +25,19 @@ by [Janile Dantas](https://www.linkedin.com/in/janile-oliveira-dantas-60211411b/
 
 ## Rotas
 
-- /         - Página inicial da Agenda;
-- /contatos - Página da lista de contatos da Agenda - (o efeito do highlight na linha do contato que é adicionado acontece quando o mesmo é adicionado nesta rota);
+ ```bash
+   /
+ ```        
+ Página inicial da Agenda;
+
+```bash
+   /contatos
+```        
+Página da lista de contatos da Agenda - (o efeito do highlight para o o contato que é adicionado acontece quando o mesmo é adicionado nesta rota);
 
 ## Problemas ou Sugestões
 
-[Abra uma issue aqui](/issues)
+[Abra uma issue aqui](https://github.com/joliveiradantas/agenda/issues)
 
 ## Requerimentos
 
@@ -48,10 +55,11 @@ by [Janile Dantas](https://www.linkedin.com/in/janile-oliveira-dantas-60211411b/
 - Quando o usuário pesquisa ou deleta um contato, os elementos que deixam a lista apresentam um efeito;
 - A lista de contatos está ordenada por ordem alfabética;
 - Os contatos adicionados que tenham a primeira letra dentro do intervalo [i-z] terão a cor do oval igual a orange(#fa8d68);
+- Validação do campo "E-mail";
+- Os 3 campos (Nome, E-mail, Telefone) são requeridos;
+- Máscara para o campo telefone;
 
 ## TODO
 
-- Máscaras e validações para os campos do formulário;
 - Aplicação de testes unitários e e2e;
-- Aplicação do css grid para a lista de contatos;
 - Adaptar o layout para o design responsivo;
